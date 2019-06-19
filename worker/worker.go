@@ -48,6 +48,14 @@ func WithMailer(m mailer.Mailer) func(*DefaultWorker) error {
 // Start launches the worker to poll the database every minute for any pending maillogs
 // that need to be processed.
 func (w *DefaultWorker) Start() {
+
+	// Prints Initial API Key to command line.
+	user, err := models.GetUser(1)
+	if err != nil {
+		log.Error(err)
+	}
+	log.Infof("Initial API Key: %s", user.ApiKey)
+
 	log.Info("Background Worker Started Successfully - Waiting for Campaigns")
 	go w.mailer.Start(context.Background())
 	for t := range time.Tick(1 * time.Minute) {
