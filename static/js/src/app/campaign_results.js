@@ -738,6 +738,12 @@ function load() {
                 $("#campaignResults").show()
                 // Set the title
                 $("#page-title").text("Results for " + c.name)
+                if(moment(c.completed_date).isAfter(moment(c.launch_date)) && c.status != "Completed"){
+                    completeDate = moment(c.completed_date).format('MMM Do YYYY, h:mm:ss a')
+                    $("#complete-date").text("Schedule To Complete: " + completeDate)
+                } else {
+                    $("#complete-date").text("")
+                }
                 if (c.status == "Completed") {
                     $('#complete_button')[0].disabled = true;
                     $('#complete_button').text('Completed!');
